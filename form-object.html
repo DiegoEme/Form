@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario</title>
+  </head>
+  <style>
+    form {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateY(-100%);
+      transform: translateX(-50%);
+      height: fit-content;
+      width: fit-content;
+      max-width: 400px;
+      border: 1px solid black;
+      padding: 1em;
+      background-color: azure;
+      border-color: lightblue;
+      box-shadow: 3px 3px 10px black;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    }
+    input {
+      width: 100%;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-right: 1em;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: lightpink;
+      border: none;
+      width: 100%;
+      border: pink;
+      margin-bottom: 1em;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h1>Taller puntos 3 y 4</h1>
+    <form id="form">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" />
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input id="email" type="text" />
+      </div>
+      <div>
+        <label for="address">Address</label>
+        <input id="address" type="text" />
+      </div>
+      <div>
+        <label for="prof">Profession</label>
+        <input id="prof" type="text" />
+      </div>
+      <div>
+        <label for="age">Age</label>
+        <input id="age" type="number" />
+      </div>
+
+      <button type="submit" onclick="enviar()">Enviar</button>
+      <div id="error"></div>
+    </form>
+
+    <script>
+      var users = [];
+
+      form.addEventListener("submit", addUser);
+
+      function addUser(e) {
+        e.preventDefault();
+        let user = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          address: document.getElementById("address").value,
+          profession: document.getElementById("prof").value,
+          age: document.getElementById("age").value,
+        };
+        users.push(user);
+        document.forms[0].reset();
+        console.log(users);
+      }
+
+      const name = document.getElementById("name");
+      var email = document.getElementById("email");
+      var address = document.getElementById("address");
+      var profession = document.getElementById("prof");
+      var age = document.getElementById("age");
+
+      const errorElement = document.getElementById("error");
+
+      function enviar(evento) {
+        let messages = [];
+        if (name.value == "" || name.value == null) {
+          messages.push("Ingrese nombre");
+        }
+
+        if (email.value == "" || email.value == null) {
+          messages.push("Ingrese email");
+          if (!email.value.match(/[!@#$%^&*]/)) {
+            messages.push("Falta el símbolo @ en correo");
+          }
+          if (!email.value.includes(".")) {
+            messages.push("Falta el punto (.) en el correo ");
+          }
+        }
+
+        if (address.value == "" || address.value == null) {
+          messages.push("Ingrese Address");
+        }
+        if (age.value == "" || age.value == null) {
+          messages.push("Ingrese Age");
+        }
+
+        if (messages.length > 0) {
+          event.preventDefault();
+          errorElement.innerText = messages.join(", ");
+        }
+      }
+    </script>
+  </body>
+</html>
